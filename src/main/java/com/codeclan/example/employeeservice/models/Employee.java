@@ -29,12 +29,13 @@ public class Employee {
     private Department department;
 
 
-    public Employee(String name, int age, int employeeNumber, String email, Department department) {
+    public Employee(String name, int age, int employeeNumber, String email, Department department, Project projects) {
         this.name = name;
         this.age = age;
         this.employeeNumber = employeeNumber;
         this.email = email;
         this.department = department;
+        this.projects = projects;
     }
 
     public Employee(){
