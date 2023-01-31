@@ -1,5 +1,8 @@
 package com.codeclan.example.employeeservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,11 +22,19 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    public Employee(String name, int age, int employeeNumber, String email) {
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+//    @JsonIgnoreProperties("employees")
+    @JsonManagedReference
+    private Department department;
+
+
+    public Employee(String name, int age, int employeeNumber, String email, Department department) {
         this.name = name;
         this.age = age;
         this.employeeNumber = employeeNumber;
         this.email = email;
+        this.department = department;
     }
 
     public Employee(){
@@ -68,5 +79,13 @@ public class Employee {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Department getDepartment() {
+        return this.department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
