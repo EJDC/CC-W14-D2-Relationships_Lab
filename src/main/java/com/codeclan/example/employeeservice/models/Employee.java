@@ -2,8 +2,11 @@ package com.codeclan.example.employeeservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="employees")
@@ -28,14 +31,32 @@ public class Employee {
     @JsonManagedReference
     private Department department;
 
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JsonIgnoreProperties({"employees"})
+    @JoinTable(
+            name = "employee_projects",
+            joinColumns = { @JoinColumn(
+                    name = "employee_id",
+                    nullable = false,
+                    updatable = false)
+            },
+            inverseJoinColumns = { @JoinColumn(
+                    name = "project_id",
+                    nullable = false,
+                    updatable = false)
+            }
+    )
+    private List<Project> projects;
 
-    public Employee(String name, int age, int employeeNumber, String email, Department department, Project projects) {
+
+    public Employee(String name, int age, int employeeNumber, String email, Department department) {
         this.name = name;
         this.age = age;
         this.employeeNumber = employeeNumber;
         this.email = email;
         this.department = department;
-        this.projects = projects;
+        this.projects = new ArrayList<>();
     }
 
     public Employee(){
@@ -88,5 +109,9 @@ public class Employee {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
     }
 }
