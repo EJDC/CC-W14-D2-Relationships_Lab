@@ -48,11 +48,8 @@ class EmployeeserviceApplicationTests {
 		employeeRepository.save(ali);
 
 		Project project = new Project("lab", 2);
-		projectRepository.save(project);
 
 		project.addEmployee(ewan);
-		projectRepository.save(project);
-
 		project.addEmployee(ali);
 		projectRepository.save(project);
 

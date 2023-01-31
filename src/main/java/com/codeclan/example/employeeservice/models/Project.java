@@ -81,6 +81,7 @@ public class Project {
 
     public void addEmployee(Employee newEmployee) {
         this.employees.add(newEmployee);
+        System.out.println("added" + newEmployee.getName());
     }
 }
 
